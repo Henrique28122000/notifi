@@ -15,14 +15,14 @@ app.use(express.json());
 // Definindo o token FCM diretamente no código para teste
 const userToken = "dloj_vBbT2a_0OCez7epKe:APA91bE4BhJrKHHvhfFwcZ8hL9VDQRcX6JwQv6vYm50MHqRVuElyuB28C-4yvF4Ee-jyO0FegMUTSz2L17iZEmjVuk0YMQPzZlc6T1dPR2WQpmj9zPTcA9K6dOy1asUKFOW7IRgdMfiR";
 
-// Rota para enviar notificação a um token específico via POST
 app.post('/send-notification', async (req, res) => {
-  // Capturando os dados enviados no corpo da requisição
-  const { title, message } = req.body;
+  console.log('Dados recebidos:', req.body); // Adicione esta linha para verificar os dados recebidos
 
-  // Verificando se o título e a mensagem foram passados
-  if (!title || !message) {
-    return res.status(400).send('Título e mensagem são obrigatórios.');
+  const { token, title, message } = req.body;
+
+  // Verificando se o token, título e mensagem foram passados
+  if (!token || !title || !message) {
+    return res.status(400).send('Token, título e mensagem são obrigatórios.');
   }
 
   const messagePayload = {
@@ -30,11 +30,10 @@ app.post('/send-notification', async (req, res) => {
       title: title || 'Sem título',
       body: message || 'Sem mensagem',
     },
-    token: userToken,  // Usando o token fixo no código para teste
+    token: token,
   };
 
   try {
-    // Enviando a notificação via Firebase Admin SDK
     const response = await admin.messaging().send(messagePayload);
     console.log('Notificação enviada com sucesso:', response);
     res.status(200).send('Notificação enviada com sucesso');
@@ -43,6 +42,7 @@ app.post('/send-notification', async (req, res) => {
     res.status(500).send('Erro ao enviar notificação');
   }
 });
+
 
 // Inicializando o servidor Node.js
 const PORT = process.env.PORT || 3000;
