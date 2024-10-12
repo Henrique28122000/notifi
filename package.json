@@ -1,0 +1,11 @@
+{
+  "name": "notifi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.0"
+  },
+  "scripts": {
+    "start": "node index.js" // não será utilizado na Vercel, mas útil localmente
+  }
+}
