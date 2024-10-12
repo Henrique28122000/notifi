@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-const serviceAccount = require('../notif-6cbd3-firebase-adminsdk-3g22i-7faf6cb417.json');
+const serviceAccount = require('notif-6cbd3-firebase-adminsdk-3g22i-7faf6cb417.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
